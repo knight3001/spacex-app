@@ -2,13 +2,17 @@ import * as React from "react";
 import { LaunchListQuery } from "../../generated/graphql";
 import "./styles.css";
 
-interface Props {
+export interface OwnProps {
+  handleChange: (newid: number) => void;
+}
+
+interface Props extends OwnProps {
   data: LaunchListQuery;
 }
 
 const className = "LaunchList";
 
-const LaunchList: React.FC<Props> = ({ data }) => (
+const LaunchList: React.FC<Props> = ({ data, handleChange }) => (
   <div className={className}>
     <h3>Launches</h3>
     <ol className={`${className}__list`}>
@@ -16,7 +20,11 @@ const LaunchList: React.FC<Props> = ({ data }) => (
         data.launches.map(
           (launch, i) =>
             !!launch && (
-              <li key={i} className={`${className}__item`}>
+              <li
+                key={i}
+                className={`${className}__item`}
+                onClick={() => handleChange(launch.flight_number!)}
+              >
                 {launch.mission_name} ({launch.launch_year})
               </li>
             )

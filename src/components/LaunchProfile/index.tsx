@@ -8,10 +8,18 @@ import React, {
 import { useLaunchProfileQuery } from "../../generated/graphql";
 import LaunchProfile from "./LaunchProfile";
 
-const LaunchProfileContainer = () => {
-  const { data, error, loading } = useLaunchProfileQuery({
-    variables: { id: "42" },
+interface OwnProps {
+  id: number;
+}
+
+const LaunchProfileContainer = (props: OwnProps) => {
+  const { data, error, loading, refetch } = useLaunchProfileQuery({
+    variables: { id: String(props.id) },
   });
+
+  useEffect(() => {
+    refetch({ id: String(props.id) });
+  }, [props.id, refetch]);
 
   if (loading) {
     return <div>Loading...</div>;
