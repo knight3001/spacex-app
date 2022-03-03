@@ -7,7 +7,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 const client = new ApolloClient({
-  uri: "https://spacexdata.herokuapp.com/graphql",
+  uri: "https://71z1g.sse.codesandbox.io/",
   cache: new InMemoryCache(),
 });
 

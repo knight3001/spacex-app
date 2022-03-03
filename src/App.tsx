@@ -5,14 +5,14 @@ import LaunchList from "./components/LaunchList";
 import LaunchProfile from "./components/LaunchProfile";
 
 function App() {
-  const [id, setId] = useState(42);
-  const handleChange = useCallback((newId) => {
-    setId(newId);
+  const [breed, setBread] = useState("affenpinscher");
+  const handleChange = useCallback((newBread) => {
+    setBread(newBread);
   }, []);
   return (
     <div className="App">
       <LaunchList handleChange={handleChange} />
-      <LaunchProfile id={id} />
+      <LaunchProfile breed={breed} />
     </div>
   );
 }

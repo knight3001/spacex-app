@@ -5,21 +5,25 @@ import React, {
   useCallback,
   useMemo,
 } from "react";
-import { useLaunchProfileQuery } from "../../generated/graphql";
+import { useDogProfileQuery } from "../../generated/graphql";
+import { NetworkStatus, useQuery, useLazyQuery } from "@apollo/client";
 import LaunchProfile from "./LaunchProfile";
 
 interface OwnProps {
-  id: number;
+  breed: string;
 }
 
 const LaunchProfileContainer = (props: OwnProps) => {
-  const { data, error, loading, refetch } = useLaunchProfileQuery({
-    variables: { id: String(props.id) },
+  const { data, error, loading, refetch, networkStatus } = useDogProfileQuery({
+    variables: { breed: props.breed },
+    notifyOnNetworkStatusChange: true,
   });
 
   useEffect(() => {
-    refetch({ id: String(props.id) });
-  }, [props.id, refetch]);
+    refetch({ breed: props.breed });
+  }, [props.breed, refetch]);
+
+  if (networkStatus === NetworkStatus.refetch) return <>Refetching!</>;
 
   if (loading) {
     return <div>Loading...</div>;
@@ -33,7 +37,20 @@ const LaunchProfileContainer = (props: OwnProps) => {
     return <div>Select a flight from the panel</div>;
   }
 
-  return <LaunchProfile data={data} />;
+  return (
+    <>
+      <button
+        onClick={() =>
+          refetch({
+            breed: "affenpinscher", // Always refetches a dalmatian instead of original breed
+          })
+        }
+      >
+        Refetch!
+      </button>
+      <LaunchProfile data={data} />
+    </>
+  );
 };
 
 export default LaunchProfileContainer;

@@ -1,31 +1,31 @@
 import * as React from "react";
-import { LaunchListQuery } from "../../generated/graphql";
+import { GetDogsQuery } from "../../generated/graphql";
 import "./styles.css";
 
 export interface OwnProps {
-  handleChange: (newid: number) => void;
+  handleChange: (newid: string) => void;
 }
 
 interface Props extends OwnProps {
-  data: LaunchListQuery;
+  data: GetDogsQuery;
 }
 
 const className = "LaunchList";
 
 const LaunchList: React.FC<Props> = ({ data, handleChange }) => (
   <div className={className}>
-    <h3>Launches</h3>
+    <h3>Dogs</h3>
     <ol className={`${className}__list`}>
-      {!!data.launches &&
-        data.launches.map(
-          (launch, i) =>
-            !!launch && (
+      {!!data.dogs &&
+        data.dogs.map(
+          (dog, i) =>
+            !!dog && (
               <li
                 key={i}
                 className={`${className}__item`}
-                onClick={() => handleChange(launch.flight_number!)}
+                onClick={() => handleChange(dog.breed)}
               >
-                {launch.mission_name} ({launch.launch_year})
+                {dog.id} ({dog.breed})
               </li>
             )
         )}

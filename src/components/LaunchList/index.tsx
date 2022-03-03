@@ -5,11 +5,11 @@ import React, {
   useCallback,
   useMemo,
 } from "react";
-import { useLaunchListQuery } from "../../generated/graphql";
+import { useGetDogsQuery } from "../../generated/graphql";
 import LaunchList, { OwnProps } from "./LaunchList";
 
 const LaunchListContainer = (props: OwnProps) => {
-  const { data, loading, error } = useLaunchListQuery();
+  const { data, loading, error } = useGetDogsQuery();
 
   if (loading) return <div>Loading...</div>;
 
