@@ -4,12 +4,31 @@ import React, {
   useEffect,
   useCallback,
   useMemo,
+  memo,
 } from "react";
+import { useQuery, gql, useLazyQuery } from "@apollo/client";
 import { useGetDogsQuery } from "../../generated/graphql";
 import LaunchList, { OwnProps } from "./LaunchList";
+import { QUERY_LAUNCH_LIST } from "./query";
 
-const LaunchListContainer = (props: OwnProps) => {
-  const { data, loading, error } = useGetDogsQuery();
+interface Props extends OwnProps {
+  breed: string | null;
+}
+
+const LaunchListContainer = (props: Props) => {
+  const [fetchDogs, { data, loading, error }] = useLazyQuery(
+    QUERY_LAUNCH_LIST,
+    {
+      onCompleted: ({ dogs }) => {
+        !props.breed &&
+          props.handleChange(dogs && dogs.length > 0 ? dogs[0]!.breed : "");
+      },
+    }
+  );
+
+  useEffect(() => {
+    fetchDogs();
+  }, [fetchDogs]);
 
   if (loading) return <div>Loading...</div>;
 
@@ -18,4 +37,4 @@ const LaunchListContainer = (props: OwnProps) => {
   return <LaunchList data={data} {...props} />;
 };
 
-export default LaunchListContainer;
+export default memo(LaunchListContainer);
