@@ -5,10 +5,23 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { cartItemsVar } from "./cache";
 
 const client = new ApolloClient({
   uri: "https://71z1g.sse.codesandbox.io/",
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          cartItems: {
+            read() {
+              return cartItemsVar();
+            },
+          },
+        },
+      },
+    },
+  }),
 });
 
 ReactDOM.render(

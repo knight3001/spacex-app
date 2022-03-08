@@ -6,8 +6,14 @@ import React, {
   useMemo,
 } from "react";
 import { useDogProfileQuery } from "../../generated/graphql";
-import { NetworkStatus, useQuery, useLazyQuery } from "@apollo/client";
+import {
+  NetworkStatus,
+  useQuery,
+  useLazyQuery,
+  useReactiveVar,
+} from "@apollo/client";
 import LaunchProfile from "./LaunchProfile";
+import { cartItemsVar } from "../../cache";
 
 interface OwnProps {
   breed: string;
@@ -18,6 +24,8 @@ const LaunchProfileContainer = (props: OwnProps) => {
     variables: { breed: props.breed },
     notifyOnNetworkStatusChange: true,
   });
+
+  const cartItems = useReactiveVar(cartItemsVar);
 
   useEffect(() => {
     refetch({ breed: props.breed });
@@ -48,6 +56,14 @@ const LaunchProfileContainer = (props: OwnProps) => {
       >
         Refetch!
       </button>
+      <div>
+        <button onClick={() => cartItemsVar([...cartItemsVar(), props.breed])}>
+          Add to Cart
+        </button>
+      </div>
+      {cartItems.map((productId) => (
+        <div key={productId}>{productId}</div>
+      ))}
       <LaunchProfile data={data} />
     </>
   );
