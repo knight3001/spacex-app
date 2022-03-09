@@ -23,7 +23,7 @@ export enum CacheControlScope {
 }
 
 export type Dog = {
-  __typename?: 'Dog';
+  __typename: 'Dog';
   breed: Scalars['String'];
   displayImage?: Maybe<Scalars['String']>;
   id: Scalars['String'];
@@ -32,13 +32,13 @@ export type Dog = {
 };
 
 export type Image = {
-  __typename?: 'Image';
+  __typename: 'Image';
   id: Scalars['String'];
   url: Scalars['String'];
 };
 
 export type Query = {
-  __typename?: 'Query';
+  __typename: 'Query';
   dog?: Maybe<Dog>;
   dogs?: Maybe<Array<Maybe<Dog>>>;
 };
@@ -51,14 +51,14 @@ export type QueryDogArgs = {
 export type GetDogsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetDogsQuery = { __typename?: 'Query', dogs?: Array<{ __typename?: 'Dog', id: string, breed: string, displayImage?: string | null, subbreeds?: Array<string | null> | null } | null> | null };
+export type GetDogsQuery = { dogs?: Array<{ __typename: 'Dog', id: string, breed: string, displayImage?: string | null, subbreeds?: Array<string | null> | null } | null> | null };
 
 export type DogProfileQueryVariables = Exact<{
   breed: Scalars['String'];
 }>;
 
 
-export type DogProfileQuery = { __typename?: 'Query', dog?: { __typename?: 'Dog', id: string, breed: string, subbreeds?: Array<string | null> | null, displayImage?: string | null, images?: Array<{ __typename?: 'Image', url: string, id: string } | null> | null } | null };
+export type DogProfileQuery = { dog?: { __typename: 'Dog', id: string, breed: string, subbreeds?: Array<string | null> | null, displayImage?: string | null, images?: Array<{ __typename: 'Image', url: string, id: string } | null> | null } | null };
 
 
 export const GetDogsDocument = gql`
