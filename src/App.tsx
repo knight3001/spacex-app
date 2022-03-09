@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from "react";
+import { ApolloConsumer } from "@apollo/client";
 import "./App.css";
 
 import LaunchList from "./components/LaunchList";
@@ -11,6 +12,9 @@ function App() {
   }, []);
   return (
     <div className="App">
+      <ApolloConsumer>
+        {(client) => <button onClick={() => client.clearStore()}>Reset</button>}
+      </ApolloConsumer>
       <LaunchList handleChange={handleChange} breed={breed} />
       {breed !== null && <LaunchProfile breed={breed} />}
     </div>
